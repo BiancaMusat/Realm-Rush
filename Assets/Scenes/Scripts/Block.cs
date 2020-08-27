@@ -6,6 +6,9 @@ public class Block : MonoBehaviour
 {
     public bool isExplored = false;
     public Block exploredFrom;
+    public bool isPlaceable = true;
+
+    [SerializeField] Tower towerPrefab;
 
     Vector2Int gridPos;
     const int gridSize = 10;
@@ -27,5 +30,21 @@ public class Block : MonoBehaviour
     {
        MeshRenderer topMeshRenderer = transform.Find("Top").GetComponent<MeshRenderer>();
        topMeshRenderer.material.color = color;
+    }
+
+    void OnMouseOver()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (isPlaceable)
+            {
+                Instantiate(towerPrefab, transform.position, Quaternion.identity);
+                isPlaceable = false;
+            } 
+            else
+            {
+                print(gameObject.name + " is NOT placeable");
+            }
+        }
     }
 }
